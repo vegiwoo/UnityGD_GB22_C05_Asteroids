@@ -11,6 +11,7 @@ namespace Asteroids.PlayerModule
         
         [Header("Movement")]
         [SerializeField] public float maxSpeed = 10f;
+        [SerializeField] public int rotationAngele = 5;
     }
 }
 

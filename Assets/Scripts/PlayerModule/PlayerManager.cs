@@ -32,7 +32,7 @@ namespace Asteroids.PlayerModule
             var playerGameObject = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
             var playerView = playerGameObject.AddComponent<PlayerView>();
             var playerLiving = new PlayerLiving(playerStats.maxHp);
-            var playerMoving = new PlayerMoving(playerStats.maxSpeed);
+            var playerMoving = new PlayerMoving(playerStats.maxSpeed, playerStats.rotationAngele);
             
             _playerPresenter = new PlayerPresenter(playerView, playerLiving, playerMoving);
             

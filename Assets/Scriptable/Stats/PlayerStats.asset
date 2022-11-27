@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   maxHp: 100
-  maxSpeed: 30
+  maxSpeed: 3
+  rotationAngele: 3

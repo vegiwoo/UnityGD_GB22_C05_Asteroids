@@ -1,21 +1,24 @@
 using System;
-using System.Numerics;
 using Asteroids.Infrastructure.Interfaces;
-using UniRx;
 
 // ReSharper disable once CheckNamespace
 namespace Asteroids.PlayerModule
 {
     internal class PlayerMoving : IMoving
     {
-        public float MaxSpeed { get; set; }
-        public float CurrentSpeed { get; set; }
-
+        #region Propetries 
+        public float MaxSpeed { get; }
+        public float CurrentSpeed { get; }
+        public int RotationAngle { get; }
+        #endregion
+        
         public event Action<(float x, float y, float z, float speed)> ChangedDirection;
+        public event Action<(int side, int angle)> ChangedRotation;
 
-        public PlayerMoving(float maxSpeed)
+        public PlayerMoving(float maxSpeed, int rotationAngle)
         {
             MaxSpeed =  CurrentSpeed = maxSpeed;
+            RotationAngle = rotationAngle;
         }
 
         public void Move(float x, float y)
@@ -28,6 +31,12 @@ namespace Asteroids.PlayerModule
             {
                 ChangedDirection?.Invoke((0, 0 ,0, 0));
             }
+        }
+
+        public void Rotate(int rotationSide)
+        { 
+            ChangedRotation?.Invoke((rotationSide != 0f ? rotationSide : 0, rotationSide != 0f ? RotationAngle : 0));
+
         }
     }
 }

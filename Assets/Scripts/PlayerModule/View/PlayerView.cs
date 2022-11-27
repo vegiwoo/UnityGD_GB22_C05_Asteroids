@@ -14,11 +14,11 @@ namespace Asteroids.PlayerModule
         #region Variables & constants
 
         private const float Elevation = 10f;
-        private Rigidbody _rigidbody;
-
-
-        private Vector3 _moveDirection = Vector3.zero;
-        private float _moveSpeed = 0.00f;
+        public Rigidbody RigidBody { get; private set; }
+        
+        private Vector3 _moveVertical;
+        private Vector3 _moveHorizontal;
+        private Vector3 _rotateDirection;
         #endregion
 
         #region Properties
@@ -29,31 +29,46 @@ namespace Asteroids.PlayerModule
 
         private void Awake()
         {
+            _moveVertical = _moveHorizontal = _rotateDirection = Vector3.zero;
             transform.Translate(0,Elevation,0);
         }
 
         private void Start()
         {
-            _rigidbody = GetComponent<Rigidbody>();
+            RigidBody = GetComponent<Rigidbody>();
         }
 
         private void FixedUpdate()
         {
-            if (_moveDirection != Vector3.zero && _moveSpeed > 0.00f)
+            if (_moveVertical != Vector3.zero)
             {
-                _rigidbody.MovePosition(_rigidbody.position + _moveDirection * _moveSpeed * Time.fixedDeltaTime);
+                RigidBody.AddForce(_moveVertical * Time.fixedDeltaTime, ForceMode.VelocityChange);
             }
 
+            if (_moveHorizontal != Vector3.zero)
+            {
+                RigidBody.AddForce(_moveHorizontal * Time.fixedDeltaTime, ForceMode.VelocityChange);
+            }
+
+            if (_rotateDirection != Vector3.zero)
+            {
+                RigidBody.AddRelativeTorque(_rotateDirection * Time.fixedDeltaTime, ForceMode.VelocityChange);
+            }
         }
 
         #endregion
 
         #region Functionality
 
-        public void ChangeDirection(Vector3 moveDirection, float moveSpeed)
+        public void ChangeMovement(Vector3 horizontal, Vector3 vertical)
         {
-            _moveDirection = moveDirection;
-            _moveSpeed = moveSpeed;
+            _moveHorizontal = horizontal;
+            _moveVertical = vertical;
+        }
+
+        public void ChangeRotation(Vector3 rotate)
+        {
+            _rotateDirection = rotate;
         }
 
         #endregion

@@ -3,6 +3,6 @@ namespace Asteroids.InputModule
 {
     public enum InputKey
     {
-        Move
+        Move, Rotate
     }
 }
